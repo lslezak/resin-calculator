@@ -1,17 +1,25 @@
 import React from "react";
 import ResinCalculator from "./components/ResinCalculator";
-import { Page, Masthead, MastheadMain, MastheadBrand, PageSection } from "@patternfly/react-core";
-import Footer from "./components/Footer";
+import { Page, Masthead, MastheadMain, PageSection, MastheadContent } from "@patternfly/react-core";
+import { useTranslation } from "react-i18next";
+
 import "./App.css";
-import i18next from "i18next";
+import Footer from "./components/Footer";
+import LangButtons from "./components/LangButtons";
 
 function App() {
+  const { t } = useTranslation("texts");
+
+  // translate also the page title
+  document.title = t("Resin Calculator");
+
   const header = <Masthead inset={{ default: "insetXs" }}>
     <MastheadMain>
-      <MastheadBrand>
-      {i18next.t("Resin Calculator")}
-      </MastheadBrand>
+        {t("Resin Calculator")}
     </MastheadMain>
+    <MastheadContent>
+      <LangButtons />
+    </MastheadContent>
   </Masthead>;
 
   return <Page header={header}>

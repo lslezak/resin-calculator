@@ -28,8 +28,8 @@ i18next.use(LanguageDetector).init({
   returnEmptyString: false,
   resources: {
     cs: {
-      translation: cs
-    }
+      texts: cs
+    },
   }
 });
 

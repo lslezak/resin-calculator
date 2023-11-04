@@ -1,8 +1,10 @@
 
 import React from "react";
 import pkg from "../../package.json";
-import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
-  return <div>{i18next.t("Version {{version}}", {version: pkg.version})}</div>
+  const { t } = useTranslation("texts");
+
+  return <div>{t("Version {{version}}", {version: pkg.version})}</div>
 }

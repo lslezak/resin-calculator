@@ -10,7 +10,7 @@ import {
 } from '@patternfly/react-core';
 
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 
 function parseRatio(ratio) {
   const [ratAstr, ratBstr] = ratio.split(":");
@@ -24,6 +24,7 @@ const ResinCalculator = () => {
   const [totalValidated, setTotalValidated] = useState("success");
   const [resinA, setResinA] = useState(0);
   const [resinB, setResinB] = useState(0);
+  const { t } = useTranslation("texts");
 
   const handleTotalChange = (_event, value) => {
     setTotal(value);
@@ -72,9 +73,9 @@ const ResinCalculator = () => {
     <Bullseye>
       <Form>
         <p style={{maxWidth: "40ch"}}>
-          {i18next.t("Simple calculator for computing amount of resin components A and B according to the specified mixing ratio.")}
+          {t("Simple calculator for computing amount of resin components A and B according to the specified mixing ratio.")}
         </p>
-        <FormGroup label={i18next.t("Mixing Ratio (Resin A : Resin B)")} fieldId="ratio">
+        <FormGroup label={t("Mixing Ratio (Resin A : Resin B)")} fieldId="ratio">
           <TextInput
             id="ratio"
             value={ratio}
@@ -83,12 +84,12 @@ const ResinCalculator = () => {
           {ratioValidated === "error" && <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={ratioValidated}>
-              {i18next.t("Enter two numbers separated by semicolon (:)")}
+              {t("Enter two numbers separated by semicolon (:)")}
               </HelperTextItem>
             </HelperText>
           </FormHelperText>}
         </FormGroup>
-        <FormGroup label={i18next.t("Total Amount (Resin A + Resin B)")} fieldId="total">
+        <FormGroup label={t("Total Amount (Resin A + Resin B)")} fieldId="total">
           <TextInput
             type="number"
             id="total"
@@ -99,22 +100,22 @@ const ResinCalculator = () => {
           {totalValidated === "error" && <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={totalValidated}>
-                {total !== "" && total <= 0 && i18next.t("Enter a number greater than zero") }
-                {total === "" && i18next.t("Enter a number") }
+                {total !== "" && total <= 0 && t("Enter a number greater than zero") }
+                {total === "" && t("Enter a number") }
               </HelperTextItem>
             </HelperText>
           </FormHelperText>}
         </FormGroup>
 
         <FormGroup>
-          <FormGroup label={i18next.t("Resin A")} fieldId="resinA">
+          <FormGroup label={t("Resin A")} fieldId="resinA">
             <TextInput
               id="resinA"
               value={resinA}
               isDisabled
             />
           </FormGroup>
-          <FormGroup label={i18next.t("Resin B")} fieldId="resinB">
+          <FormGroup label={t("Resin B")} fieldId="resinB">
             <TextInput
               id="resinB"
               value={resinB}
