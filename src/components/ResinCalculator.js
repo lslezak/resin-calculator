@@ -24,7 +24,7 @@ const ResinCalculator = () => {
   const [totalValidated, setTotalValidated] = useState("success");
   const [resinA, setResinA] = useState(0);
   const [resinB, setResinB] = useState(0);
-  const { t } = useTranslation("texts");
+  const { t, i18n } = useTranslation("texts");
 
   const handleTotalChange = (_event, value) => {
     setTotal(value);
@@ -65,8 +65,8 @@ const ResinCalculator = () => {
 
     const resinB = total / (1 + ratio);
     const resinA = resinB * ratio;
-    setResinA(resinA.toLocaleString(undefined, {maximumFractionDigits: 1}));
-    setResinB(resinB.toLocaleString(undefined, {maximumFractionDigits: 1}));
+    setResinA(resinA.toLocaleString(i18n.language, {maximumFractionDigits: 1}));
+    setResinB(resinB.toLocaleString(i18n.language, {maximumFractionDigits: 1}));
   };
 
   return (
