@@ -45,9 +45,6 @@ jobs:
       - name: Build the Page
         run: npm run build
 
-      - name: Cleanup
-        run: rm -rf build/static/media && rm build/asset-manifest.json
-
       - name: Setup Pages
         uses: actions/configure-pages@v1
 
