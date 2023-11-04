@@ -9,6 +9,8 @@ gulp.task('i18next', function () {
     .pipe(scanner({
       // supported languages
       lngs: ['cs'],
+      nsSeparator: false,
+      keySeparator: false,
       resource: {
         // the source path is relative to current working directory
         loadPath: 'src/i18n/{{lng}}.json',

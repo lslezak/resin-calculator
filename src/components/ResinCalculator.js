@@ -10,6 +10,7 @@ import {
 } from '@patternfly/react-core';
 
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import i18next from "i18next";
 
 function parseRatio(ratio) {
   const [ratAstr, ratBstr] = ratio.split(":");
@@ -70,7 +71,10 @@ const ResinCalculator = () => {
   return (
     <Bullseye>
       <Form>
-        <FormGroup label="Mixing Ratio (Resin A : Resin B)" fieldId="ratio">
+        <p style={{maxWidth: "40ch"}}>
+          {i18next.t("Simple calculator for computing amount of resin components A and B according to the specified mixing ratio.")}
+        </p>
+        <FormGroup label={i18next.t("Mixing Ratio (Resin A : Resin B)")} fieldId="ratio">
           <TextInput
             id="ratio"
             value={ratio}
@@ -79,12 +83,12 @@ const ResinCalculator = () => {
           {ratioValidated === "error" && <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={ratioValidated}>
-                Enter two numbers separated by semicolon (:)
+              {i18next.t("Enter two numbers separated by semicolon (:)")}
               </HelperTextItem>
             </HelperText>
           </FormHelperText>}
         </FormGroup>
-        <FormGroup label="Total Amount (Resin A + Resin B)" fieldId="total">
+        <FormGroup label={i18next.t("Total Amount (Resin A + Resin B)")} fieldId="total">
           <TextInput
             type="number"
             id="total"
@@ -95,22 +99,22 @@ const ResinCalculator = () => {
           {totalValidated === "error" && <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={totalValidated}>
-                {total !== "" && total <= 0 && "Must be a number greater than zero" }
-                {total === "" && "Must be a number" }
+                {total !== "" && total <= 0 && i18next.t("Enter a number greater than zero") }
+                {total === "" && i18next.t("Enter a number") }
               </HelperTextItem>
             </HelperText>
           </FormHelperText>}
         </FormGroup>
 
         <FormGroup>
-          <FormGroup label="Resin A" fieldId="resinA">
+          <FormGroup label={i18next.t("Resin A")} fieldId="resinA">
             <TextInput
               id="resinA"
               value={resinA}
               isDisabled
             />
           </FormGroup>
-          <FormGroup label="Resin B" fieldId="resinB">
+          <FormGroup label={i18next.t("Resin B")} fieldId="resinB">
             <TextInput
               id="resinB"
               value={resinB}
