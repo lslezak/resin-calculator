@@ -1,6 +1,6 @@
 import React from "react";
 import ResinCalculator from "./components/ResinCalculator";
-import { Page, Masthead, MastheadMain, PageSection, MastheadContent } from "@patternfly/react-core";
+import { Page, Masthead, PageSection, MastheadContent, Text, TextContent, TextVariants } from "@patternfly/react-core";
 import { useTranslation } from "react-i18next";
 
 import "./App.css";
@@ -14,10 +14,10 @@ function App() {
   document.title = t("Resin Calculator");
 
   const header = <Masthead inset={{ default: "insetXs" }}>
-    <MastheadMain>
-        {t("Resin Calculator")}
-    </MastheadMain>
-    <MastheadContent>
+    <MastheadContent style={ {justifyContent: "space-between"} }>
+      <TextContent>
+        <Text component={TextVariants.h1}>{t("Resin Calculator")}</Text>
+      </TextContent>
       <LangButtons />
     </MastheadContent>
   </Masthead>;
