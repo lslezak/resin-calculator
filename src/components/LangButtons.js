@@ -7,8 +7,13 @@ import i18next from "i18next";
 
 import "./LangButton.css";
 
-export default function LangButtons() {
+export default function LangButtons({ changeCB }) {
   const { i18n } = useTranslation("texts");
+
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+    changeCB(lang);
+  };
 
   return (
     <div>
@@ -16,7 +21,7 @@ export default function LangButtons() {
         isInline
         variant="link"
         className={i18next.language === "en" && "activeLanguage"}
-        onClick={() => i18n.changeLanguage("en")}
+        onClick={() => changeLanguage("en")}
       >
         English
       </Button>
@@ -25,7 +30,7 @@ export default function LangButtons() {
         isInline
         variant="link"
         className={i18next.language === "cs" && "activeLanguage"}
-        onClick={() => i18n.changeLanguage("cs")}
+        onClick={() => changeLanguage("cs")}
       >
         Čeština
       </Button>

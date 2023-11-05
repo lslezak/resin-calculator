@@ -17,62 +17,57 @@ function parseRatio(ratio) {
   return [Number(ratAstr), Number(ratBstr)];
 }
 
-const ResinCalculator = () => {
-  const [total, setTotal] = useState("");
+const calculateResin = (total, ratStr) => {
+  const totalValid = total > 0;
+  const ratioValid = /^[1-9][0-9]*:[1-9][0-9]*$/.test(ratStr);
+
+  if (!totalValid || !ratioValid)
+    return [0, 0, totalValid, ratioValid];
+
+  const [ratA, ratB] = parseRatio(ratStr);
+  const ratio = ratA / ratB;
+
+  const B = total / (1 + ratio);
+  const A = B * ratio;
+
+  return [A, B, true, true];
+}
+
+const ResinCalculator = ({ lang }) => {
+  const [total, setTotal] = useState();
   const [ratio, setRatio] = useState("100:30");
-  const [ratioValidated, setRatioValidated] = useState("success");
-  const [totalValidated, setTotalValidated] = useState("success");
-  const [resinA, setResinA] = useState(0);
-  const [resinB, setResinB] = useState(0);
-  const { t, i18n } = useTranslation("texts");
+  const { t } = useTranslation("texts");
 
   const handleTotalChange = (_event, value) => {
     setTotal(value);
-
-    if (value > 0) {
-      setTotalValidated("success");
-
-      if (ratioValidated === "success") {
-        calculateResin(value, ratio);
-      }
-    } else {
-      setTotalValidated("error");
-      setResinA(0);
-      setResinB(0);
-    }
   };
 
   const handleRatioChange = (_event, value) => {
-    const newRatio = value.trim();
-    setRatio(newRatio);
-
-    if (/^[1-9][0-9]*:[1-9][0-9]*$/.test(newRatio)) {
-      setRatioValidated("success");
-
-      if (totalValidated === "success") {
-        calculateResin(total, value);
-      }
-    } else {
-      setRatioValidated("error");
-      setResinA(0);
-      setResinB(0);
-    }
+    setRatio(value.trim());
   };
 
-  const calculateResin = (total, ratStr) => {
-    const [ratA, ratB] = parseRatio(ratStr);
-    const ratio = ratA / ratB;
+  const [A, B, totalValid, ratioValid] = calculateResin(total, ratio);
 
-    const resinB = total / (1 + ratio);
-    const resinA = resinB * ratio;
-    setResinA(resinA.toLocaleString(i18n.language, {maximumFractionDigits: 1}));
-    setResinB(resinB.toLocaleString(i18n.language, {maximumFractionDigits: 1}));
-  };
+  const ratioError = !ratioValid && <FormHelperText>
+    <HelperText>
+      <HelperTextItem icon={<ExclamationCircleIcon />} variant="error">
+        {t("Enter two numbers separated by semicolon (:)")}
+      </HelperTextItem>
+    </HelperText>
+  </FormHelperText>;
+
+  const totalError = (!totalValid && total !== undefined) && <FormHelperText>
+    <HelperText>
+      <HelperTextItem icon={<ExclamationCircleIcon />} variant="error">
+        {t("Enter a number greater than zero")}
+      </HelperTextItem>
+    </HelperText>
+  </FormHelperText>;
 
   return (
     <Bullseye>
       <Form>
-        <p style={{maxWidth: "40ch"}}>
+        <p style={{ maxWidth: "40ch" }}>
           {t("Simple calculator for computing amount of resin components A and B according to the specified mixing ratio.")}
         </p>
         <FormGroup label={t("Mixing Ratio (Resin A : Resin B)")} fieldId="ratio">
@@ -81,44 +76,31 @@ const ResinCalculator = () => {
             value={ratio}
             onChange={handleRatioChange}
           />
-          {ratioValidated === "error" && <FormHelperText>
-            <HelperText>
-              <HelperTextItem icon={<ExclamationCircleIcon />} variant={ratioValidated}>
-              {t("Enter two numbers separated by semicolon (:)")}
-              </HelperTextItem>
-            </HelperText>
-          </FormHelperText>}
+          {ratioError}
         </FormGroup>
         <FormGroup label={t("Total Amount (Resin A + Resin B)")} fieldId="total">
           <TextInput
             type="number"
             id="total"
             min="1"
-            value={total}
+            value={total || ""}
             onChange={handleTotalChange}
           />
-          {totalValidated === "error" && <FormHelperText>
-            <HelperText>
-              <HelperTextItem icon={<ExclamationCircleIcon />} variant={totalValidated}>
-                {total !== "" && total <= 0 && t("Enter a number greater than zero") }
-                {total === "" && t("Enter a number") }
-              </HelperTextItem>
-            </HelperText>
-          </FormHelperText>}
+          {totalError}
         </FormGroup>
 
         <FormGroup>
           <FormGroup label={t("Resin A")} fieldId="resinA">
             <TextInput
               id="resinA"
-              value={resinA}
+              value={A.toLocaleString(lang, { maximumFractionDigits: 1 })}
               isDisabled
             />
           </FormGroup>
           <FormGroup label={t("Resin B")} fieldId="resinB">
             <TextInput
               id="resinB"
-              value={resinB}
+              value={B.toLocaleString(lang, { maximumFractionDigits: 1 })}
               isDisabled
             />
           </FormGroup>
