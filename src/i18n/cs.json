@@ -1,10 +1,10 @@
 {
   "Version {{version}}": "Verze {{version}}",
-  "Resin Calculator": "Výpočet Pryskyřice",
+  "Resin Calculator": "Kalkulátor Pryskyřice",
   "Total Amount (Resin A + Resin B)": "Celkové množství (Pryskyřice A + Pryskyřice B)",
   "Resin A": "Pryskyřice A",
   "Resin B": "Pryskyřice B",
-  "Mixing Ratio (Resin A : Resin B)": "Míchací poměr (Pryskyřice A : Pryskyřice B)",
+  "Mixing Ratio (Resin A : Resin B)": "Mísící poměr (Pryskyřice A : Pryskyřice B)",
   "Enter two numbers separated by semicolon (:)": "Zadejte dvě čísla oddělaná dvojtečkou (:)",
   "Enter a number greater than zero": "Zadejte číslo větší než nula",
   "Simple calculator for computing amount of resin components A and B according to the specified mixing ratio.": "Jednoduchý kalkulátor pro výpočet množství složek pryskyřice A a B podle zadaného mísícího poměru."
