@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import {
   Form,
   FormGroup,
-  FormHelperText,
-  HelperText,
-  HelperTextItem,
   TextInput,
   Bullseye,
 } from '@patternfly/react-core';
 
-import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { useTranslation } from "react-i18next";
+import ValidationError from './ValidationError';
 
 function parseRatio(ratio) {
   const [ratAstr, ratBstr] = ratio.split(":");
@@ -48,21 +45,13 @@ const ResinCalculator = ({ lang }) => {
 
   const [A, B, totalValid, ratioValid] = calculateResin(total, ratio);
 
-  const ratioError = !ratioValid && <FormHelperText>
-    <HelperText>
-      <HelperTextItem icon={<ExclamationCircleIcon />} variant="error">
-        {t("Enter two numbers separated by semicolon (:)")}
-      </HelperTextItem>
-    </HelperText>
-  </FormHelperText>;
+  const ratioError = !ratioValid && <ValidationError>
+    {t("Enter two numbers separated by semicolon (:)")}
+  </ValidationError>;
 
-  const totalError = (!totalValid && total !== undefined) && <FormHelperText>
-    <HelperText>
-      <HelperTextItem icon={<ExclamationCircleIcon />} variant="error">
-        {t("Enter a number greater than zero")}
-      </HelperTextItem>
-    </HelperText>
-  </FormHelperText>;
+  const totalError = (!totalValid && total !== undefined) && <ValidationError>
+    {t("Enter a number greater than zero")}
+  </ValidationError>;
 
   return (
     <Bullseye>
