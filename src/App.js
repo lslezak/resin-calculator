@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import "./App.css";
 import Footer from "./components/Footer";
-import LangButtons from "./components/LangButtons";
+import LangSwitcher from "./components/LangSwitcher";
 
 function App() {
   const { t, i18n } = useTranslation("texts");
@@ -14,12 +14,17 @@ function App() {
   // translate also the page title
   document.title = t("Resin Calculator");
 
+  const langChanged = (lang) => {
+    i18n.changeLanguage(lang);
+    setLang(lang);
+  };
+
   const header = <Masthead inset={{ default: "insetXs" }}>
     <MastheadContent style={ {justifyContent: "space-between"} }>
       <TextContent>
         <Text component={TextVariants.h1}>{t("Resin Calculator")}</Text>
       </TextContent>
-      <LangButtons changeCB={setLang}/>
+      <LangSwitcher onChange={langChanged}/>
     </MastheadContent>
   </Masthead>;
 
